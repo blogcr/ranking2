@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Ranking Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
 <style>
 
@@ -82,17 +83,22 @@ color:#fff;
 z-index:2;
 }
 
+/* área inferior estruturada */
+
 .bottom{
 position:absolute;
 left:18px;
 right:18px;
 bottom:18px;
+
+display:flex;
+flex-direction:column;
+gap:8px;
 }
 
+/* autor */
+
 .autor{
-position:absolute;
-left:18px;
-bottom:70px;
 background:#B71C1C;
 padding:7px 12px;
 font-size:12px;
@@ -100,13 +106,13 @@ font-weight:700;
 text-transform:uppercase;
 border-radius:6px;
 color:#fff;
+
+align-self:flex-start;
 }
 
+/* título alinhado */
+
 .titulo{
-position:absolute;
-left:18px;
-right:18px;
-bottom:32px;
 font-size:18px;
 line-height:1.25;
 font-weight:600;
@@ -118,6 +124,8 @@ display:-webkit-box;
 overflow:hidden;
 }
 
+/* data no canto inferior */
+
 .data-postagem{
 position:absolute;
 right:18px;
@@ -125,6 +133,8 @@ bottom:12px;
 font-size:11px;
 color:rgba(255,255,255,0.65);
 }
+
+/* responsividade */
 
 @media(max-width:1200px){
 .grid{
@@ -149,7 +159,6 @@ padding-right:70px;
 
 .autor{
 font-size:11px;
-bottom:50px;
 }
 
 .ranking-number{
@@ -167,6 +176,8 @@ margin-right:45px;
 }
 
 }
+
+/* animação */
 
 .fade-in{
 animation:fadeUp .6s ease forwards;
@@ -259,11 +270,16 @@ card.innerHTML=`
 
 <div class="views">${item.visualizacoes} visualizações</div>
 
+<div class="bottom">
+
 <div class="autor">${item.autor}</div>
 
 <div class="titulo">${item.titulo}</div>
 
+</div>
+
 <div class="data-postagem">${formatarData(item.publicacao)}</div>
+
 `;
 
 grid.appendChild(card);
