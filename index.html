@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Ranking Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico">
 
 <style>
 
@@ -35,7 +38,6 @@ overflow:hidden;
 box-shadow:0 8px 25px rgba(0,0,0,0.08);
 text-decoration:none;
 display:block;
-transition:transform .2s ease;
 background:#000;
 aspect-ratio:16/10;
 }
@@ -46,17 +48,11 @@ transform:scale(1.02);
 
 .card-img{
 position:absolute;
-top:0;
-left:0;
+inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
-opacity:0;
-transition:opacity .3s ease;
-}
-
-.card-img.loaded{
-opacity:1;
+display:block;
 }
 
 .overlay{
@@ -72,9 +68,7 @@ top:12px;
 left:18px;
 font-size:38px;
 font-weight:900;
-color:rgba(255,255,255,0.2);
-line-height:1;
-pointer-events:none;
+color:rgba(255,255,255,0.25);
 }
 
 .views{
@@ -94,9 +88,6 @@ position:absolute;
 left:18px;
 right:18px;
 bottom:18px;
-display:flex;
-flex-direction:column;
-gap:6px;
 }
 
 .autor{
@@ -106,7 +97,8 @@ font-size:12px;
 font-weight:700;
 text-transform:uppercase;
 border-radius:6px;
-width:fit-content;
+display:inline-block;
+margin-bottom:8px;
 color:#fff;
 }
 
@@ -122,9 +114,11 @@ overflow:hidden;
 }
 
 .data-postagem{
-font-size:11px;
-color:rgba(255,255,255,0.65);
-text-align:right;
+position:absolute;
+right:0;
+bottom:0;
+font-size:10px;
+color:rgba(255,255,255,0.6);
 }
 
 @media(max-width:1200px){
@@ -141,15 +135,6 @@ grid-template-columns:1fr;
 
 .card{
 height:95px;
-aspect-ratio:auto;
-}
-
-.ranking-number{
-font-size:28px;
-top:auto;
-left:auto;
-bottom:10px;
-right:15px;
 }
 
 .titulo{
@@ -161,8 +146,15 @@ padding-right:70px;
 font-size:11px;
 }
 
+.ranking-number{
+font-size:28px;
+top:auto;
+left:auto;
+bottom:10px;
+right:15px;
+}
+
 .data-postagem{
-position:absolute;
 bottom:2px;
 right:0;
 margin-right:45px;
@@ -170,20 +162,8 @@ margin-right:45px;
 
 }
 
-.fade-in{
-opacity:0;
-transform:translateY(15px);
-animation:fadeUp .6s ease forwards;
-}
-
-@keyframes fadeUp{
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
 </style>
+
 </head>
 
 <body>
@@ -228,11 +208,11 @@ return dias[partes[0]]+", "+dia+"."+mes+".26";
 
 fetch(api)
 
-.then(response=>response.json())
+.then(r=>r.json())
 
 .then(data=>{
 
-if(!data||data.length===0){
+if(!data || data.length===0){
 container.innerHTML="Nenhum resultado.";
 return;
 }
@@ -244,7 +224,7 @@ var grid=container.querySelector(".grid");
 data.slice(0,10).forEach(function(item,index){
 
 var imagem=item.imagem
-? item.imagem.replace(/\/w\d+-h\d+[^/]*\//,"/w600/")
+? item.imagem.replace(/\/w\d+-h\d+[^/]*\//,"/w800/")
 : "";
 
 var card=document.createElement("a");
@@ -262,6 +242,7 @@ card.innerHTML=`
 <img src="${imagem}" class="card-img" loading="lazy">
 
 <div class="overlay">
+
 <div class="bottom">
 
 <div class="autor">${item.autor}</div>
@@ -271,35 +252,22 @@ card.innerHTML=`
 <div class="data-postagem">${formatarData(item.publicacao)}</div>
 
 </div>
+
 </div>
 `;
 
 grid.appendChild(card);
 
-var img=card.querySelector(".card-img");
-
-img.onload=function(){
-img.classList.add("loaded");
-};
-
-img.onerror=function(){
-img.src="https://via.placeholder.com/800x600/111111/ffffff?text=Imagem";
-};
-
-setTimeout(function(){
-card.classList.add("fade-in");
-},index*120);
-
 });
 
 })
 
-.catch(function(err){
-console.error(err);
+.catch(function(){
 container.innerHTML="<p style='color:#b00'>Erro ao carregar ranking.</p>";
 });
 
 </script>
 
 </body>
+
 </html>
