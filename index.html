@@ -8,7 +8,7 @@
 <title>Ranking Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico">
 
 <style>
 
@@ -40,10 +40,6 @@ background:#000;
 aspect-ratio:16/10;
 opacity:0;
 transform:translateY(15px);
-}
-
-.card:hover{
-transform:scale(1.02);
 }
 
 .card-img{
@@ -83,22 +79,19 @@ color:#fff;
 z-index:2;
 }
 
-/* área inferior estruturada */
+/* faixa inferior */
 
 .bottom{
 position:absolute;
 left:18px;
 right:18px;
 bottom:18px;
-
-display:flex;
-flex-direction:column;
-gap:8px;
 }
 
-/* autor */
+/* faixa fixa do autor */
 
 .autor{
+display:block;
 background:#B71C1C;
 padding:7px 12px;
 font-size:12px;
@@ -107,10 +100,18 @@ text-transform:uppercase;
 border-radius:6px;
 color:#fff;
 
-align-self:flex-start;
+height:32px;
+line-height:18px;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+
+width:fit-content;
+margin-bottom:8px;
 }
 
-/* título alinhado */
+/* título alinhado sempre abaixo */
 
 .titulo{
 font-size:18px;
@@ -122,9 +123,11 @@ display:-webkit-box;
 -webkit-line-clamp:2;
 -webkit-box-orient:vertical;
 overflow:hidden;
+
+min-height:44px;
 }
 
-/* data no canto inferior */
+/* data */
 
 .data-postagem{
 position:absolute;
@@ -159,6 +162,7 @@ padding-right:70px;
 
 .autor{
 font-size:11px;
+height:28px;
 }
 
 .ranking-number{
