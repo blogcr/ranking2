@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Ranking Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;600;700;900&display=swap" rel="stylesheet">
-
 <link rel="shortcut icon" href="favicon.ico">
 
 <style>
@@ -40,6 +37,8 @@ text-decoration:none;
 display:block;
 background:#000;
 aspect-ratio:16/10;
+opacity:0;
+transform:translateY(15px);
 }
 
 .card:hover{
@@ -52,14 +51,12 @@ inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
-display:block;
 }
 
 .overlay{
 position:absolute;
 inset:0;
 background:linear-gradient(to top,rgba(0,0,0,0.85),rgba(0,0,0,0.15));
-padding:18px;
 }
 
 .ranking-number{
@@ -69,6 +66,7 @@ left:18px;
 font-size:38px;
 font-weight:900;
 color:rgba(255,255,255,0.25);
+z-index:2;
 }
 
 .views{
@@ -81,6 +79,7 @@ padding:6px 10px;
 border-radius:20px;
 font-weight:600;
 color:#fff;
+z-index:2;
 }
 
 .bottom{
@@ -91,22 +90,28 @@ bottom:18px;
 }
 
 .autor{
+position:absolute;
+left:18px;
+bottom:70px;
 background:#B71C1C;
 padding:7px 12px;
 font-size:12px;
 font-weight:700;
 text-transform:uppercase;
 border-radius:6px;
-display:inline-block;
-margin-bottom:8px;
 color:#fff;
 }
 
 .titulo{
+position:absolute;
+left:18px;
+right:18px;
+bottom:32px;
 font-size:18px;
 line-height:1.25;
 font-weight:600;
 color:#fff;
+
 display:-webkit-box;
 -webkit-line-clamp:2;
 -webkit-box-orient:vertical;
@@ -115,10 +120,10 @@ overflow:hidden;
 
 .data-postagem{
 position:absolute;
-right:0;
-bottom:0;
-font-size:10px;
-color:rgba(255,255,255,0.6);
+right:18px;
+bottom:12px;
+font-size:11px;
+color:rgba(255,255,255,0.65);
 }
 
 @media(max-width:1200px){
@@ -144,6 +149,7 @@ padding-right:70px;
 
 .autor{
 font-size:11px;
+bottom:50px;
 }
 
 .ranking-number{
@@ -162,8 +168,18 @@ margin-right:45px;
 
 }
 
-</style>
+.fade-in{
+animation:fadeUp .6s ease forwards;
+}
 
+@keyframes fadeUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
 </head>
 
 <body>
@@ -235,28 +251,26 @@ card.className="card";
 
 card.innerHTML=`
 
+<img src="${imagem}" class="card-img" loading="lazy">
+
+<div class="overlay"></div>
+
 <div class="ranking-number">${index+1}</div>
 
 <div class="views">${item.visualizacoes} visualizações</div>
-
-<img src="${imagem}" class="card-img" loading="lazy">
-
-<div class="overlay">
-
-<div class="bottom">
 
 <div class="autor">${item.autor}</div>
 
 <div class="titulo">${item.titulo}</div>
 
 <div class="data-postagem">${formatarData(item.publicacao)}</div>
-
-</div>
-
-</div>
 `;
 
 grid.appendChild(card);
+
+setTimeout(function(){
+card.classList.add("fade-in");
+},index*120);
 
 });
 
@@ -269,5 +283,4 @@ container.innerHTML="<p style='color:#b00'>Erro ao carregar ranking.</p>";
 </script>
 
 </body>
-
 </html>
